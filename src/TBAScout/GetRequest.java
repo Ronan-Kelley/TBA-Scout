@@ -5,12 +5,16 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class getRequest {
+public class GetRequest {
+    /**
+     * self explanatory name, yeah? Sends a get request,
+     * requires a base URL, path, and headers.
+     */
     private final String USER_AGENT = "Mozilla/5.0";
     private String baseURL, path;
     private String[] headers;
     
-    public getRequest(String baseURL, String path, String[] headers) {
+    public GetRequest(String baseURL, String path, String[] headers) {
         this.baseURL = baseURL;
         this.path = path;
         this.headers = headers;
