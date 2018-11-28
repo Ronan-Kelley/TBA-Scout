@@ -7,6 +7,7 @@ public class Application extends JFrame {
     /**
      * class dedicated to initializing the main window of the program
      */
+    
     public Application() {
         initUI();
     }
