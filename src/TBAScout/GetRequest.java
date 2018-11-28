@@ -5,6 +5,12 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+// import javax.script.ScriptException;
+import jdk.nashorn.api.scripting.ScriptObjectMirror;
+
+
 public class GetRequest {
     /**
      * self explanatory name, yeah? Sends a get request,
@@ -13,6 +19,9 @@ public class GetRequest {
     private final String USER_AGENT = "Mozilla/5.0";
     private String baseURL, path;
     private String[] headers;
+    private String finalResponse;
+    private ScriptEngine engine = new ScriptEngineManager().getEngineByName("nashorn");
+    private ScriptObjectMirror json;
     
     public GetRequest(String baseURL, String path, String[] headers) {
         this.baseURL = baseURL;
@@ -53,8 +62,30 @@ public class GetRequest {
 		}
 		in.close();
 
-		//print result
-		System.out.println(response.toString());
+		setFinalResponse(response.toString());
 
-	}
+    }
+    
+    private void setFinalResponse(String finalResponse) {
+        this.finalResponse = finalResponse;
+    }
+
+    public String getFinalResponse() {
+        return finalResponse;
+    }
+
+    public String getDataPoint(String key) {
+        String dataPoint = "";
+        String jsonData = finalResponse;
+
+        try {
+            json = (ScriptObjectMirror) engine.eval("JSON");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        json.callMember("parse", jsonData);
+
+        return dataPoint;
+    }
 }
