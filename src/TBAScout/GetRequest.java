@@ -86,6 +86,8 @@ public class GetRequest {
 
         json.callMember("parse", jsonData);
 
+        dataPoint = jsonData;
+
         return dataPoint;
     }
 }

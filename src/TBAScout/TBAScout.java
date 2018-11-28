@@ -3,7 +3,6 @@ package TBAScout;
 import java.awt.EventQueue;
 
 public class TBAScout {
-    public static Options options = new Options();
 
     public static void main(String[] args) {
         /**
@@ -17,7 +16,7 @@ public class TBAScout {
             for (String arg : args) {
                 switch (arg) {
                 case "-cli":
-                    options.setCli(true);
+                    Options.setCli(true);
                     System.out.println("found argument: " + arg);
                     break;
                 case "-key":
@@ -37,9 +36,8 @@ public class TBAScout {
                                 foundKey = true;
                             }
                         }
-                        System.out.println(args[i]);
                     }
-                    options.setTBAKey(arg1);
+                    Options.setTBAKey(arg1);
                     System.out.println("found argument pair: " + arg + ": " + arg1);
                     break;
                 }
@@ -47,6 +45,11 @@ public class TBAScout {
         } else if (args == null) {
             System.out.println("no arguments found!");
         }
+
+        // GetRequest gr = new GetRequest("https://www.thebluealliance.com/api/v3", "/status", new String[] {"X-TBA-Auth_Key", options.getTBAKey()});
+        // System.out.println(gr.getDataPoint(""));
+
+        TBAGetRequest gr = new TBAGetRequest();
 
         initUI();
     }
@@ -56,7 +59,7 @@ public class TBAScout {
          * not to be confused with the initUI found in Application.java, this method
          * exists exclusively to put the graphical end of things in the event queue.
          */
-        if (options.getCli() == false) {
+        if (Options.getCli() == false) {
             System.out.println("program launched");
 
             EventQueue.invokeLater(() -> {
