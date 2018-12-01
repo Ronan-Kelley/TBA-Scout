@@ -12,42 +12,7 @@ public class TBAScout {
 
         System.out.println("launched");
 
-        if (args != null) {
-            for (String arg : args) {
-                switch (arg) {
-                case "-cli":
-                    Options.setCli(true);
-                    System.out.println("found argument: " + arg);
-                    break;
-                case "-key":
-                    Boolean foundDashKey = false;
-                    Boolean foundKey = false;
-                    String arg1 = "";
-                    for (int i = 0; i < args.length; i++) { //loop back through the array of arguments
-                        if (!foundDashKey) {
-                            if (args[i].equals("-key")) { //find the argument dictating a key
-                                foundDashKey = true;
-                            }
-                        } else if (foundDashKey && !foundKey) {
-                            if (args[i].contains("-") == false) {
-                                foundKey = false; //once the argument dictating a key is found, everything after it that comes before the next key should be the actual key
-                                arg1 += args[i];
-                            } else if (args[i].contains("-")) {
-                                foundKey = true;
-                            }
-                        }
-                    }
-                    Options.setTBAKey(arg1);
-                    System.out.println("found argument pair: " + arg + ": " + arg1);
-                    break;
-                }
-            }
-        } else if (args == null) {
-            System.out.println("no arguments found!");
-        }
-
-        // GetRequest gr = new GetRequest("https://www.thebluealliance.com/api/v3", "/status", new String[] {"X-TBA-Auth_Key", options.getTBAKey()});
-        // System.out.println(gr.getDataPoint(""));
+        Options.handleArgs(args);
 
         TBAGetRequest gr = new TBAGetRequest();
 
