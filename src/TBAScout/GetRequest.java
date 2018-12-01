@@ -6,7 +6,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
 
 public class GetRequest {
@@ -73,8 +73,8 @@ public class GetRequest {
         return finalResponse;
     }
 
-    public JsonArray getJsonObj() {
-        JsonArray jsonArray = gson.fromJson(finalResponse, JsonArray.class);
-        return jsonArray;
+    public JsonObject getJsonObj() {
+        JsonObject jsonObj = gson.fromJson(finalResponse, JsonObject.class);
+        return jsonObj;
     }
 }
