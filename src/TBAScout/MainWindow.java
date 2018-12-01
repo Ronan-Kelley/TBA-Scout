@@ -12,29 +12,13 @@ public class MainWindow extends JPanel {
     //
     // instance variables
     //
-    // private final String[] TBAPaths = { //maybe not worth putting every single path?
-    //     "/status",
-    //     "/teams/%pagenum",
-    //     "/teams/%pagenum/simple",
-    //     "/teams/%pagenum/keys",
-    //     "/teams/%year/%pagenum",
-    //     "/teams/%year/%pagenum/simple",
-    //     "/teams/%year/%pagenum/keys",
-    //     "/team/%teamKey/events/%year/statuses",
-    //     "/events/%year",
-    //     "/events/%year/simple",
-    //     "/events/%year/keys",
-    //     "/event/%eventKey/teams",
-    //     "/event/%eventKey/teams/simple",
-    //     ""
-    // };
 
-    private final String[] shortTBAPaths = {
+    private final String[] TBAPaths = {
         "/team/%teamKey/simple",
         "/team/%teamKey/events/simple"
     };
 
-    private JComboBox<String> paths = new JComboBox<String>(shortTBAPaths);
+    private JComboBox<String> paths = new JComboBox<String>(TBAPaths);
     private JButton submitPath = new JButton("submit path");
 
     //

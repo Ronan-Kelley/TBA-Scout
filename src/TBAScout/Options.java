@@ -5,7 +5,7 @@ public class Options {
      * this class exists entirely to keep track of command line options
      */
     private static Boolean cli = false;
-    private static String TBAKey = null; //put your key here, or pass it to the program via command line
+    private static String TBAKey = null; //put your key here, or pass it to the program as an argument
 
     //
     // getters and setters
@@ -31,11 +31,11 @@ public class Options {
         if (args != null) {
             for (String arg : args) {
                 switch (arg) {
-                case "-cli":
+                case "-cli": //check for "-cli" argument, disable graphics if present
                     Options.setCli(true);
                     System.out.println("found argument: " + arg);
                     break;
-                case "-key":
+                case "-key": //make sure "-key" is specified before looping through all this
                     Boolean foundDashKey = false;
                     Boolean foundKey = false;
                     String arg1 = "";

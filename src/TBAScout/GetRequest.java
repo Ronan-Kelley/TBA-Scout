@@ -5,10 +5,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
-// import javax.script.ScriptException;
-import jdk.nashorn.api.scripting.ScriptObjectMirror;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 
 public class GetRequest {
@@ -20,8 +18,7 @@ public class GetRequest {
     private String baseURL, path;
     private String[] headers;
     private String finalResponse;
-    private ScriptEngine engine = new ScriptEngineManager().getEngineByName("nashorn");
-    private ScriptObjectMirror json;
+    private Gson gson = new Gson();
     
     public GetRequest(String baseURL, String path, String[] headers) {
         this.baseURL = baseURL;
@@ -62,7 +59,9 @@ public class GetRequest {
 		}
 		in.close();
 
-		setFinalResponse(response.toString());
+        setFinalResponse(response.toString());
+        
+        System.out.println(response.toString());
 
     }
     
@@ -74,20 +73,8 @@ public class GetRequest {
         return finalResponse;
     }
 
-    public String getDataPoint(String key) {
-        String dataPoint = "";
-        String jsonData = finalResponse;
-
-        try {
-            json = (ScriptObjectMirror) engine.eval("JSON");
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-
-        json.callMember("parse", jsonData);
-
-        dataPoint = jsonData;
-
-        return dataPoint;
+    public JsonObject getJsonObj() {
+        JsonObject jsonObj = gson.fromJson(finalResponse, JsonObject.class);
+        return jsonObj;
     }
 }
