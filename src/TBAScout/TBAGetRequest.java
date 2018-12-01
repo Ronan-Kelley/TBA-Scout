@@ -1,5 +1,7 @@
 package TBAScout;
 
+import com.google.gson.JsonArray;
+
 public class TBAGetRequest {
     /**
      * simple front end for GetRequest, since all of these should be requests for
@@ -9,7 +11,7 @@ public class TBAGetRequest {
     private String path = "/status"; //default path is status
     private String key = "";
     private GetRequest gr;
-    private Object requestObj;
+    private JsonArray requestObj;
 
     public TBAGetRequest(String path) {
         /**
@@ -44,11 +46,14 @@ public class TBAGetRequest {
         gr = new GetRequest(baseURL, path, new String[] {"X-TBA-Auth-Key", key});
     }
 
-    private Object getObject() {
-        return gr.objectifyRequest();
+    private JsonArray getObject() {
+        return gr.getJsonObj();
     }
 
-    public Object getRequestObj() {
-        return requestObj;
+    public String getKeyValPair(String key) {
+        //TODO use maps to allow grabbing specific data when requested (SO question https://stackoverflow.com/questions/10033366/gson-to-deserialise-array-of-name-value-pairs)
+        return new String();
     }
+
+    //TODO add a getter for a map of the keyValPair
 }
