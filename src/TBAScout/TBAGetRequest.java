@@ -5,11 +5,15 @@ public class TBAGetRequest {
      * simple front end for GetRequest, since all of these should be requests for
      * TBA
      */
+
+     /**
+      * TODO add generic method to handle parsing the json into objects
+      * TODO add a method to convert JSON that is only an array into a java ArrayList<String>
+      */
     private final String baseURL = "https://www.thebluealliance.com/api/v3"; //baseURL will always be blueAlliance
     private String path = "/status"; //default path is status
     private String key = "";
     private GetRequest gr;
-    private Object requestObj;
 
     public TBAGetRequest(String path) {
         /**
@@ -22,7 +26,6 @@ public class TBAGetRequest {
             System.out.println("key found!");
             this.path = path;
             doRequest();
-            requestObj = getObject();
         }
     }
 
@@ -36,7 +39,6 @@ public class TBAGetRequest {
             key = Options.getTBAKey();
             System.out.println("key found!");
             doRequest();
-            requestObj = getObject();
         }
     }
 
@@ -44,11 +46,11 @@ public class TBAGetRequest {
         gr = new GetRequest(baseURL, path, new String[] {"X-TBA-Auth-Key", key});
     }
 
-    private Object getObject() {
-        return gr.objectifyRequest();
+    public String getPath() {
+        return path;
     }
 
-    public Object getRequestObj() {
-        return requestObj;
+    public String getJson() {
+        return gr.getFinalResponse();
     }
 }

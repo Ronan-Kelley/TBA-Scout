@@ -5,9 +5,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-
 
 public class GetRequest {
     /**
@@ -17,8 +14,7 @@ public class GetRequest {
     private final String USER_AGENT = "Mozilla/5.0";
     private String baseURL, path;
     private String[] headers;
-    private String finalResponse;
-    private Gson gson = new Gson();
+    private String finalResponse = null;
     
     public GetRequest(String baseURL, String path, String[] headers) {
         this.baseURL = baseURL;
@@ -70,11 +66,10 @@ public class GetRequest {
     }
 
     public String getFinalResponse() {
-        return finalResponse;
-    }
-
-    public JsonObject getJsonObj() {
-        JsonObject jsonObj = gson.fromJson(finalResponse, JsonObject.class);
-        return jsonObj;
+        if (finalResponse != null) {
+            return finalResponse;
+        } else {
+            return "json unavailable";
+        }
     }
 }
