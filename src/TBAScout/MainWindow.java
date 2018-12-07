@@ -4,6 +4,10 @@ import javax.swing.JComboBox;
 import javax.swing.JButton;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
+
+import scoutPojo.StatusPojo;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -14,12 +18,15 @@ public class MainWindow extends JPanel {
     //
 
     private final String[] TBAPaths = {
-        "/team/%teamKey/simple",
+        "/status",
         "/team/%teamKey/events/simple"
     };
 
+    private FinalJsonHandler jsonHandler = new FinalJsonHandler();
+
     private JComboBox<String> paths = new JComboBox<String>(TBAPaths);
     private JButton submitPath = new JButton("submit path");
+    private JTextArea output = new JTextArea();
 
     //
     // constructors
@@ -46,7 +53,20 @@ public class MainWindow extends JPanel {
         submitPath.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                String path = (String) paths.getSelectedItem();
+                switch (path) {
+                    case "/status":
+                        StatusPojo statusOut = jsonHandler.handleStatusJson(new TBAGetRequest().getJson());
+                        try {
+                        output.setText(statusOut.getCurrent_season());
+                        } catch (NullPointerException err) {
+                            output.setText("an error has occured!");
+                        }
+                        break;
                 
+                    default:
+                        break;
+                }
             }
         });
         
@@ -54,7 +74,14 @@ public class MainWindow extends JPanel {
         // initialize objects in main window
         //
 
+        output.setEditable(false);
+
+        //
+        // add objects into main iwndow
+        //
+
         add(paths);
         add(submitPath);
+        add(output);
     }
 }

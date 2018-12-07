@@ -51,6 +51,10 @@ public class TBAGetRequest {
     }
 
     public String getJson() {
+        try {
         return gr.getFinalResponse();
+        } catch (NullPointerException e) {
+            return "error";
+        }
     }
 }
