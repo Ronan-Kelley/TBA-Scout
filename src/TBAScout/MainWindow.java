@@ -1,6 +1,7 @@
 package TBAScout;
 
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
@@ -20,14 +21,14 @@ public class MainWindow extends JPanel {
 
     private final String[] TBAPaths = {
         "/status",
-        "/team/{team_key}"
+        "/team/{team_key}/simple"
     };
 
     private FinalJsonHandler jsonHandler = new FinalJsonHandler();
 
     private JComboBox<String> paths = new JComboBox<String>(TBAPaths);
     private JButton submitPath = new JButton("submit path");
-    private JTextArea output = new JTextArea();
+    private JTextArea output = new JTextArea(30, 58);
     private JTextField teamKey = new JTextField("frc team number (teamkey)");
 
     //
@@ -66,13 +67,17 @@ public class MainWindow extends JPanel {
                         }
                         break;
                     
-                    case "/team/{team_key}":
-                        String teamNum = "141";
+                    case "/team/{team_key}/simple":
+                        int teamNum = 141;
                         try {
-                            teamNum = teamKey.getText();
-                        } catch (NullPointerException err) { }
+                            teamNum = Integer.parseInt(teamKey.getText());
+                        } catch (NullPointerException err) {
+                            teamNum = 141;
+                        } catch (NumberFormatException err) {
+                            teamNum = 141;
+                        }
 
-                        SimpleTeamPojo simpleTeamPojo = jsonHandler.handleTeamJson(new TBAGetRequest("/team/frc" + teamNum).getJson());
+                        SimpleTeamPojo simpleTeamPojo = jsonHandler.handleTeamJson(new TBAGetRequest("/team/frc" + teamNum + "/simple").getJson());
 
                         output.setText(simpleTeamPojo.getCity());
                         break;
@@ -97,7 +102,7 @@ public class MainWindow extends JPanel {
 
         add(paths);
         add(submitPath);
-        add(output);
         add(teamKey);
+        add(output);
     }
 }
