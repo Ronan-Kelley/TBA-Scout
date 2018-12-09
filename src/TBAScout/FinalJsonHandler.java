@@ -30,4 +30,14 @@ public class FinalJsonHandler {
         return simpleTeamPojo;
     }
 
+    public EventsPojo handleEventsPojo(String json) {
+        EventsPojo eventsPojo = null;
+        if (!json.equals("json unavailable") && !json.equals("error")) {
+            eventsPojo = gson.fromJson(json, EventsPojo.class);
+        } else {
+            eventsPojo = null;
+        }
+        return eventsPojo;
+    }
+
 }

@@ -21,7 +21,8 @@ public class MainWindow extends JPanel {
 
     private final String[] TBAPaths = {
         "/status",
-        "/team/{team_key}/simple"
+        "/team/{team_key}/simple",
+        "/team/{team_key}/events"
     };
 
     private FinalJsonHandler jsonHandler = new FinalJsonHandler();
@@ -54,6 +55,8 @@ public class MainWindow extends JPanel {
         //
 
         submitPath.addActionListener(new ActionListener() {
+            int teamNum;
+
             @Override
             public void actionPerformed(ActionEvent e) {
                 String path = (String) paths.getSelectedItem();
@@ -61,14 +64,15 @@ public class MainWindow extends JPanel {
                     case "/status":
                         StatusPojo statusOut = jsonHandler.handleStatusJson(new TBAGetRequest().getJson());
                         try {
-                        output.setText(statusOut.getCurrent_season());
+                        output.setText("current season: " + statusOut.getCurrent_season());
                         } catch (NullPointerException err) {
                             output.setText("an error has occured!");
                         }
                         break;
                     
                     case "/team/{team_key}/simple":
-                        int teamNum = 141;
+                        teamNum = 141;
+                        
                         try {
                             teamNum = Integer.parseInt(teamKey.getText());
                         } catch (NullPointerException err) {
@@ -79,8 +83,26 @@ public class MainWindow extends JPanel {
 
                         SimpleTeamPojo simpleTeamPojo = jsonHandler.handleTeamJson(new TBAGetRequest("/team/frc" + teamNum + "/simple").getJson());
 
-                        output.setText(simpleTeamPojo.getCity());
+                        output.setText("team's home city: " + simpleTeamPojo.getCity());
                         break;
+
+                    case "/team/{team_key}/events":
+                    /**
+                     * TODO the current backend doesn't support receiving arrays of objects - this will have to be updated at some point.
+                     */
+                        teamNum = 141;
+                        
+                        try {
+                            teamNum = Integer.parseInt(teamKey.getText());
+                        } catch (NullPointerException err) {
+                            teamNum = 141;
+                        } catch (NumberFormatException err) {
+                            teamNum = 141;
+                        }
+
+                        EventsPojo eventsPojo = jsonHandler.handleEventsPojo(new TBAGetRequest("/team/frc" + teamNum + "/events").getJson());
+
+                        output.setText(eventsPojo.getYear());
                 
                     default:
                         break;
