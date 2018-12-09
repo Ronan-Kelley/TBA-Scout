@@ -5,8 +5,9 @@ import javax.swing.JButton;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
-import scoutPojo.StatusPojo;
+import scoutPojo.*;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,7 +20,7 @@ public class MainWindow extends JPanel {
 
     private final String[] TBAPaths = {
         "/status",
-        "/team/%teamKey/events/simple"
+        "/team/{team_key}"
     };
 
     private FinalJsonHandler jsonHandler = new FinalJsonHandler();
@@ -27,6 +28,7 @@ public class MainWindow extends JPanel {
     private JComboBox<String> paths = new JComboBox<String>(TBAPaths);
     private JButton submitPath = new JButton("submit path");
     private JTextArea output = new JTextArea();
+    private JTextField teamKey = new JTextField("frc team number (teamkey)");
 
     //
     // constructors
@@ -63,6 +65,17 @@ public class MainWindow extends JPanel {
                             output.setText("an error has occured!");
                         }
                         break;
+                    
+                    case "/team/{team_key}":
+                        String teamNum = "141";
+                        try {
+                            teamNum = teamKey.getText();
+                        } catch (NullPointerException err) { }
+
+                        SimpleTeamPojo simpleTeamPojo = jsonHandler.handleTeamJson(new TBAGetRequest("/team/frc" + teamNum).getJson());
+
+                        output.setText(simpleTeamPojo.getCity());
+                        break;
                 
                     default:
                         break;
@@ -75,6 +88,8 @@ public class MainWindow extends JPanel {
         //
 
         output.setEditable(false);
+        teamKey.setToolTipText("enter an frc team number here (optional)");
+        
 
         //
         // add objects into main iwndow
@@ -83,5 +98,6 @@ public class MainWindow extends JPanel {
         add(paths);
         add(submitPath);
         add(output);
+        add(teamKey);
     }
 }

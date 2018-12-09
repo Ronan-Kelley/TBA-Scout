@@ -19,15 +19,15 @@ public class FinalJsonHandler {
         return statusPojo;
     }
 
-    // "/team/{team_key}" path
-    public TeamPojo handleTeamJson(String json) {
-        TeamPojo teamPojo = null;
+    // "/team/{team_key}/simple" path
+    public SimpleTeamPojo handleTeamJson(String json) {
+        SimpleTeamPojo simpleTeamPojo = null;
         if (!json.equals("json unavailable") && !json.equals("error")) {
-        teamPojo = gson.fromJson(json, TeamPojo.class);
+            simpleTeamPojo = gson.fromJson(json, SimpleTeamPojo.class);
         } else {
-            teamPojo = null;
+            simpleTeamPojo = null;
         }
-        return teamPojo;
+        return simpleTeamPojo;
     }
 
 }
