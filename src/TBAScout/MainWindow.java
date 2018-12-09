@@ -87,9 +87,6 @@ public class MainWindow extends JPanel {
                         break;
 
                     case "/team/{team_key}/events":
-                    /**
-                     * TODO the current backend doesn't support receiving arrays of objects - this will have to be updated at some point.
-                     */
                         teamNum = 141;
                         
                         try {
@@ -100,9 +97,9 @@ public class MainWindow extends JPanel {
                             teamNum = 141;
                         }
 
-                        EventsPojo eventsPojo = jsonHandler.handleEventsPojo(new TBAGetRequest("/team/frc" + teamNum + "/events").getJson());
+                        EventsPojo[] eventsPojo = jsonHandler.handleEventsPojo(new TBAGetRequest("/team/frc" + teamNum + "/events").getJson());
 
-                        output.setText(eventsPojo.getYear());
+                        output.setText(eventsPojo[2].getYear());
                 
                     default:
                         break;
