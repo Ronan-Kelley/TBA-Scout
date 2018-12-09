@@ -1,0 +1,4 @@
+add more paths
+add an option to grab all the teams at an event, and then calculate their worst round, best round, and average score per round from their most recent previous event
+add more cli options so that cool new stuff can be grabbed through command line still
+make the UI less ugly (may want to swap to a tabbed layout manager, and develop something labview-esque?)
