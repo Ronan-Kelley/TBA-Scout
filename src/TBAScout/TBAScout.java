@@ -14,10 +14,6 @@ public class TBAScout {
 
         Options.handleArgs(args);
 
-        TBAGetRequest gr = new TBAGetRequest();
-        FinalJsonHandler jsonHandler = new FinalJsonHandler();
-        jsonHandler.handleStatusJson(gr.getJson());
-
         initUI();
     }
 
