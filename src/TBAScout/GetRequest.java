@@ -42,9 +42,9 @@ public class GetRequest {
             connection.setRequestProperty(headers[i], headers[i+1]);
         }
 
-		int responseCode = connection.getResponseCode();
-		System.out.println("\nSending 'GET' request to URL : " + baseURL);
-        System.out.println("Response Code : " + responseCode);
+		// int responseCode = connection.getResponseCode();
+		// System.out.println("\nSending 'GET' request to URL : " + baseURL);
+        // System.out.println("Response Code : " + responseCode);
 
 		BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 		String inputLine;

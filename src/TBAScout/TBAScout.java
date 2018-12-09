@@ -10,8 +10,6 @@ public class TBAScout {
          * convention of starting with a dash
          */
 
-        System.out.println("launched");
-
         Options.handleArgs(args);
 
         initUI();
