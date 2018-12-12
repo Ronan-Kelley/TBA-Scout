@@ -24,6 +24,7 @@ public class InputWindow extends JPanel {
     };
 
     private String requestOutput = "";
+    private Boolean newRequest = false;
 
     private FinalJsonHandler jsonHandler = new FinalJsonHandler();
 
@@ -105,11 +106,21 @@ public class InputWindow extends JPanel {
                     default:
                         break;
                 }
+                newRequest = true;
             }
         });
     }
 
     public String getRequestOutput() {
         return requestOutput;
+    }
+
+    public Boolean getNewRequest() {
+        if (newRequest) {
+            newRequest = false;
+            return true;
+        } else {
+            return false;
+        }
     }
 }
