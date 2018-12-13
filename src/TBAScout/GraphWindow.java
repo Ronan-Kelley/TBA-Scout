@@ -96,9 +96,10 @@ public class GraphWindow extends JPanel {
 
     private ArrayList<Integer[]> getDPFromMatches(SimpleMatches[] matches, int teamNum) {
         ArrayList<Integer[]> dataPoints = new ArrayList<Integer[]>();
+        curTeamData.scores = new ArrayList<Integer>();
         String selectedTeam = "frc" + String.valueOf(teamNum);
         Boolean foundTeam = false;
-        int curIteration = 0;
+        int curIteration = 1;
 
         for (SimpleMatches match : matches) {
             String[] curTeams = match.getAlliances().getBlue().getTeam_keys();
