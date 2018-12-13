@@ -3,6 +3,7 @@ package TBAScout;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
+import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
@@ -18,25 +19,35 @@ import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
+import scoutPojo.SimpleMatches;
+
 @SuppressWarnings("serial")
 public class GraphWindow extends JPanel {
+    ChartPanel chartPanel;
+    FinalJsonHandler jsonHandler = new FinalJsonHandler();
 
     public GraphWindow() {
         XYDataset dataset = getDataset();
         JFreeChart chart = createChart(dataset);
-        ChartPanel chartPanel = new ChartPanel(chart);
+        chartPanel = new ChartPanel(chart);
 
         add(chartPanel);
     }
 
+    public void redrawGraph() {
+        XYDataset dataset = getDataset();
+        JFreeChart chart = createChart(dataset);
+
+        chartPanel.setChart(chart);
+    }
+
     private XYDataset getDataset() {
-        XYSeries series = new XYSeries("2016");
-        series.add(18, 567);
-        series.add(20, 612);
-        series.add(25, 800);
-        series.add(30, 980);
-        series.add(40, 1410);
-        series.add(50, 2350);
+        XYSeries series = new XYSeries("team scores");
+        ArrayList<Integer[]> dataPoints = getDPFromMatches(jsonHandler.handleMatchesPojo(new TBAGetRequest("/team/frc141/matches/2018/simple").getJson()), 141);
+
+        for (Integer[] score : dataPoints) {
+            series.add(score[0], score[1]);
+        }
 
         XYSeriesCollection dataset = new XYSeriesCollection();
         dataset.addSeries(series);
@@ -47,9 +58,9 @@ public class GraphWindow extends JPanel {
     private JFreeChart createChart(XYDataset dataset) {
 
         JFreeChart chart = ChartFactory.createXYLineChart(
-                "Average salary per age", 
-                "Age", 
-                "Salary (€)", 
+                "score on a match-by-match basis", 
+                "match", 
+                "Alliance Score", 
                 dataset, 
                 PlotOrientation.VERTICAL,
                 true, 
@@ -74,13 +85,37 @@ public class GraphWindow extends JPanel {
 
         chart.getLegend().setFrame(BlockBorder.NONE);
 
-        chart.setTitle(new TextTitle("Average Salary per Age",
+        chart.setTitle(new TextTitle("Team 141 scores",
                         new Font("Serif", java.awt.Font.BOLD, 18)
                 )
         );
 
         return chart;
 
+    }
+
+    private ArrayList<Integer[]> getDPFromMatches(SimpleMatches[] matches, int teamNum) {
+        ArrayList<Integer[]> dataPoints = new ArrayList<Integer[]>();
+        String selectedTeam = "frc" + String.valueOf(teamNum);
+        Boolean foundTeam = false;
+        int curIteration = 0;
+
+        for (SimpleMatches match : matches) {
+            String[] curTeams = match.getAlliances().getBlue().getTeam_keys();
+            for (String curTeam : curTeams) {
+                if (curTeam.equals(selectedTeam)) {
+                    foundTeam = true;
+                }
+            }
+            if (foundTeam) {
+                dataPoints.add(new Integer[] {curIteration, Integer.parseInt(match.getAlliances().getBlue().getScore())});
+            } else if (!foundTeam) {
+                dataPoints.add(new Integer[] {curIteration, Integer.parseInt(match.getAlliances().getRed().getScore())});
+            }
+            curIteration += 1;
+        }
+
+        return dataPoints;
     }
 
 }

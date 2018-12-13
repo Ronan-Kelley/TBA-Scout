@@ -115,7 +115,7 @@ public class SimpleMatches {
                 + ", event_key = " + event_key + "]";
     }
 
-    class Alliances {
+    public class Alliances {
         private Red red;
 
         private Blue blue;
@@ -142,7 +142,7 @@ public class SimpleMatches {
         }
     }
 
-    class Red {
+    public class Red {
         private String[] dq_team_keys;
 
         private String[] surrogate_team_keys;
@@ -190,7 +190,7 @@ public class SimpleMatches {
         }
     }
 
-    class Blue {
+    public class Blue {
         private String[] dq_team_keys;
 
         private String[] surrogate_team_keys;
