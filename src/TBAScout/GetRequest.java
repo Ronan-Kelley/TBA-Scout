@@ -57,7 +57,7 @@ public class GetRequest {
 
         setFinalResponse(response.toString());
         
-        System.out.println(response.toString());
+        // System.out.println(response.toString());
 
     }
     
