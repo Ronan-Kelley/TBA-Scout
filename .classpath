@@ -8,4 +8,6 @@
   <classpathentry kind="src" path="src"/>
   <classpathentry kind="output" path="bin"/>
   <classpathentry kind="lib" path="lib/gson-2.8.5.jar"/>
+  <classpathentry kind="lib" path="lib/jcommon-1.0.23.jar"/>
+  <classpathentry kind="lib" path="lib/jfreechart-1.0.19.jar"/>
 </classpath>

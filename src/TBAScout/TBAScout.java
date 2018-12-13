@@ -28,6 +28,7 @@ public class TBAScout {
                 // uncomment to start maximized
                 // exe.setExtendedState(JFrame.MAXIMIZED_BOTH);
                 exe.setVisible(true);
+                exe.setBounds(0, 0, 500, 500);
                 exe.pack();
             });
         }

@@ -1,126 +1,58 @@
 package TBAScout;
 
-import javax.swing.JComboBox;
-import javax.swing.JButton;
-import javax.swing.BorderFactory;
-import javax.swing.JPanel;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-
-import scoutPojo.*;
-
+import java.awt.EventQueue;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+
+import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
+import javax.swing.Timer;
 
 @SuppressWarnings("serial")
-public class MainWindow extends JPanel {
-    //
-    // instance variables
-    //
+public class MainWindow extends JPanel implements ActionListener {
+	//
+	// swing objects
+	//
 
-    private final String[] TBAPaths = {
-        "/status",
-        "/team/{team_key}/simple",
-        "/team/{team_key}/events"
-    };
+	private InputWindow inputWindow = new InputWindow();
+	private OutputWindow outputWindow = new OutputWindow();
+	private GraphWindow graphWindow = new GraphWindow();
+	private Timer timer = new Timer(100, this);
 
-    private FinalJsonHandler jsonHandler = new FinalJsonHandler();
+	public MainWindow() {
+		super(new GridLayout(1, 1));
 
-    private JComboBox<String> paths = new JComboBox<String>(TBAPaths);
-    private JButton submitPath = new JButton("submit path");
-    private JTextArea output = new JTextArea(30, 58);
-    private JTextField teamKey = new JTextField("frc team number (teamkey)");
+		JTabbedPane tabbedPane = new JTabbedPane();
 
-    //
-    // constructors
-    //
+		tabbedPane.addTab("GET request settings", null, inputWindow, "set GET request properties");
+		tabbedPane.setMnemonicAt(0, KeyEvent.VK_1);
 
-    public MainWindow() {
-        initMainWindow();
-    }
+		tabbedPane.addTab("GET request output", null, outputWindow, "see GET request returned values");
+		tabbedPane.setMnemonicAt(1, KeyEvent.VK_2);
 
-    private void initMainWindow() {
-        //
-        // initialize main window
-        //
+		tabbedPane.addTab("GET request output (graphs)", null, graphWindow,
+				"see GET request returned values in the form of a graph (where applicable)");
+		tabbedPane.setMnemonicAt(2, KeyEvent.VK_3);
 
-        setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
+		// Add the tabbed pane to this panel.
+		add(tabbedPane);
 
-		setFocusable(true);
-        setDoubleBuffered(true);
+		// The following line enables to use scrolling tabs.
+		tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 
-        //
-        // add event listeners
-        //
+		timer.start();
+	}
 
-        submitPath.addActionListener(new ActionListener() {
-            int teamNum;
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == timer && inputWindow.getNewRequest()) {
+			outputWindow.setOutput(inputWindow.getRequestOutput());
+		}
 
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String path = (String) paths.getSelectedItem();
-                switch (path) {
-                    case "/status":
-                        StatusPojo statusOut = jsonHandler.handleStatusJson(new TBAGetRequest().getJson());
-                        try {
-                        output.setText("current season: " + statusOut.getCurrent_season());
-                        } catch (NullPointerException err) {
-                            output.setText("an error has occured!");
-                        }
-                        break;
-                    
-                    case "/team/{team_key}/simple":
-                        teamNum = 141;
-                        
-                        try {
-                            teamNum = Integer.parseInt(teamKey.getText());
-                        } catch (NullPointerException err) {
-                            teamNum = 141;
-                        } catch (NumberFormatException err) {
-                            teamNum = 141;
-                        }
-
-                        SimpleTeamPojo simpleTeamPojo = jsonHandler.handleTeamJson(new TBAGetRequest("/team/frc" + teamNum + "/simple").getJson());
-
-                        output.setText("team's home city: " + simpleTeamPojo.getCity());
-                        break;
-
-                    case "/team/{team_key}/events":
-                        teamNum = 141;
-                        
-                        try {
-                            teamNum = Integer.parseInt(teamKey.getText());
-                        } catch (NullPointerException err) {
-                            teamNum = 141;
-                        } catch (NumberFormatException err) {
-                            teamNum = 141;
-                        }
-
-                        EventsPojo[] eventsPojo = jsonHandler.handleEventsPojo(new TBAGetRequest("/team/frc" + teamNum + "/events").getJson());
-
-                        output.setText(eventsPojo[2].getYear());
-                
-                    default:
-                        break;
-                }
-            }
-        });
-        
-        //
-        // initialize objects in main window
-        //
-
-        output.setEditable(false);
-        teamKey.setToolTipText("enter an frc team number here (optional)");
-        
-
-        //
-        // add objects into main iwndow
-        //
-
-        add(paths);
-        add(submitPath);
-        add(teamKey);
-        add(output);
-    }
+		EventQueue.invokeLater(() -> {
+			this.updateUI();
+		});
+	}
 }
