@@ -27,23 +27,23 @@ public class GraphWindow extends JPanel {
     FinalJsonHandler jsonHandler = new FinalJsonHandler();
 
     public GraphWindow() {
-        XYDataset dataset = getDataset();
+        XYDataset dataset = getDataset(jsonHandler.handleMatchesPojo(new TBAGetRequest("/team/frc141/matches/2018/simple").getJson()), 141);
         JFreeChart chart = createChart(dataset);
         chartPanel = new ChartPanel(chart);
 
         add(chartPanel);
     }
 
-    public void redrawGraph() {
-        XYDataset dataset = getDataset();
+    public void redrawGraph(SimpleMatches[] matches, int teamNum) {
+        XYDataset dataset = getDataset(matches, teamNum);
         JFreeChart chart = createChart(dataset);
 
         chartPanel.setChart(chart);
     }
 
-    private XYDataset getDataset() {
-        XYSeries series = new XYSeries("team scores");
-        ArrayList<Integer[]> dataPoints = getDPFromMatches(jsonHandler.handleMatchesPojo(new TBAGetRequest("/team/frc141/matches/2018/simple").getJson()), 141);
+    private XYDataset getDataset(SimpleMatches[] matches, int teamNum) {
+        XYSeries series = new XYSeries("2018");
+        ArrayList<Integer[]> dataPoints = getDPFromMatches(matches, teamNum);
 
         for (Integer[] score : dataPoints) {
             series.add(score[0], score[1]);
@@ -85,7 +85,7 @@ public class GraphWindow extends JPanel {
 
         chart.getLegend().setFrame(BlockBorder.NONE);
 
-        chart.setTitle(new TextTitle("Team 141 scores",
+        chart.setTitle(new TextTitle("Team scores",
                         new Font("Serif", java.awt.Font.BOLD, 18)
                 )
         );

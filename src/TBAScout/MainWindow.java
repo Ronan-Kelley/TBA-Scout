@@ -10,6 +10,8 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.Timer;
 
+import scoutPojo.SimpleMatches;
+
 @SuppressWarnings("serial")
 public class MainWindow extends JPanel implements ActionListener {
 	//
@@ -47,8 +49,14 @@ public class MainWindow extends JPanel implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == timer && inputWindow.getNewRequest()) {
-			outputWindow.setOutput(inputWindow.getRequestOutput());
+		if (e.getSource() == timer) {
+			if (inputWindow.getNewRequest()) {
+				outputWindow.setOutput(inputWindow.getRequestOutput());
+			}
+
+			if (inputWindow.getNewGraphRequest()) {
+				graphWindow.redrawGraph((SimpleMatches[]) inputWindow.getJsonObj(), inputWindow.getTeamNum());
+			}
 		}
 
 		EventQueue.invokeLater(() -> {
