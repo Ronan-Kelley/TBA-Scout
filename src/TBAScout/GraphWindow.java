@@ -107,6 +107,11 @@ public class GraphWindow extends JPanel {
                     foundTeam = true;
                 }
             }
+
+            /**
+             * data added to curTeamData.scores seems to occasionally be incorrect, resulting
+             * in a false display of 0 for a lowest score.
+             */
             if (foundTeam) {
                 dataPoints.add(new Integer[] {curIteration, Integer.parseInt(match.getAlliances().getBlue().getScore())});
                 curTeamData.scores.add(Integer.parseInt(match.getAlliances().getBlue().getScore()));
