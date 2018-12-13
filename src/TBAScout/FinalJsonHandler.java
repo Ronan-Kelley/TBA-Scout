@@ -30,6 +30,7 @@ public class FinalJsonHandler {
         return simpleTeamPojo;
     }
 
+    // "/team/{team_key}/events"
     public EventsPojo[] handleEventsPojo(String json) {
         EventsPojo[] eventsPojo = null;
         if (!json.equals("json unavailable") && !json.equals("error")) {
@@ -38,6 +39,18 @@ public class FinalJsonHandler {
             eventsPojo = null;
         }
         return eventsPojo;
+    }
+
+    public SimpleMatches[] handleMatchesPojo(String json) {
+        SimpleMatches[] simpleMatches = null;
+
+        if (!json.equals("json unavailable") && !json.equals("error")) {
+            simpleMatches = gson.fromJson(json, SimpleMatches[].class);
+        } else {
+            simpleMatches = null;
+        }
+
+        return simpleMatches;
     }
 
 }
