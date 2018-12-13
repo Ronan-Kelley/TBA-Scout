@@ -56,6 +56,7 @@ public class MainWindow extends JPanel implements ActionListener {
 
 			if (inputWindow.getNewGraphRequest()) {
 				graphWindow.redrawGraph((SimpleMatches[]) inputWindow.getJsonObj(), inputWindow.getTeamNum());
+				outputWindow.setOutput(curTeamData.toOutputString());
 			}
 		}
 

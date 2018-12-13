@@ -109,11 +109,15 @@ public class GraphWindow extends JPanel {
             }
             if (foundTeam) {
                 dataPoints.add(new Integer[] {curIteration, Integer.parseInt(match.getAlliances().getBlue().getScore())});
+                curTeamData.scores.add(Integer.parseInt(match.getAlliances().getBlue().getScore()));
             } else if (!foundTeam) {
                 dataPoints.add(new Integer[] {curIteration, Integer.parseInt(match.getAlliances().getRed().getScore())});
+                curTeamData.scores.add(Integer.parseInt(match.getAlliances().getRed().getScore()));
             }
             curIteration += 1;
         }
+
+        curTeamData.calcScoreInfo();
 
         return dataPoints;
     }
