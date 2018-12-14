@@ -1,4 +1,4 @@
-package TBAScout;
+package TBAScout.gui;
 
 import javax.swing.JFrame;
 

@@ -1,4 +1,6 @@
-package TBAScout;
+package TBAScout.gui;
+
+import TBAScout.*;
 
 import java.awt.BasicStroke;
 import java.awt.Color;

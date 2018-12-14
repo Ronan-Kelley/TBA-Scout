@@ -1,5 +1,7 @@
 package TBAScout;
 
+import TBAScout.gui.*;
+
 import java.awt.EventQueue;
 
 public class TBAScout {
