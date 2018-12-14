@@ -6,9 +6,6 @@ public class TBAGetRequest {
      * TBA
      */
 
-     /**
-      * TODO add a method to convert JSON that is only an array into a java ArrayList<String>
-      */
     private final String baseURL = "https://www.thebluealliance.com/api/v3"; //baseURL will always be blueAlliance
     private String path = "/status"; //default path is status
     private String key = "";
