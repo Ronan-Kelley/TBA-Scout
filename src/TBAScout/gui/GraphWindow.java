@@ -34,7 +34,7 @@ public class GraphWindow extends JPanel {
         chartPanel = new ChartPanel(chart);
 
         add(chartPanel);
-    }
+    } 
 
     public void redrawGraph(SimpleMatches[] matches, int teamNum) {
         XYDataset dataset = getDataset(matches, teamNum);
@@ -44,7 +44,7 @@ public class GraphWindow extends JPanel {
     }
 
     private XYDataset getDataset(SimpleMatches[] matches, int teamNum) {
-        XYSeries series = new XYSeries("2018");
+        XYSeries series = new XYSeries("team " + teamNum);
         ArrayList<Integer[]> dataPoints = getDPFromMatches(matches, teamNum);
 
         for (Integer[] score : dataPoints) {
