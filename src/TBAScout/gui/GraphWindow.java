@@ -105,11 +105,10 @@ public class GraphWindow extends JPanel {
 
         for (SimpleMatches match : matches) {
             String[] curTeams = match.getAlliances().getBlue().getTeam_keys();
+            foundTeam = false;
             for (String curTeam : curTeams) {
                 if (curTeam.equals(selectedTeam)) {
                     foundTeam = true;
-                } else {
-                    foundTeam = false;
                 }
             }
 
@@ -123,6 +122,20 @@ public class GraphWindow extends JPanel {
             } else if (!foundTeam) {
                 dataPoints.add(new Integer[] {curIteration, Integer.parseInt(match.getAlliances().getRed().getScore())});
                 curTeamData.scores.add(Integer.parseInt(match.getAlliances().getRed().getScore()));
+            }
+
+            if (curTeamData.scores.get(curTeamData.scores.size()-1) == 0) {
+                System.out.println("blue teams:");
+                for (String str : match.getAlliances().getBlue().getTeam_keys()) {
+                    System.out.println("    " + str);
+                }
+
+                System.out.println("red teams:");
+                for (String str : match.getAlliances().getRed().getTeam_keys()) {
+                    System.out.println("    " + str);
+                }
+                System.out.println("score (R/B): " + match.getAlliances().getRed().getScore() + " / " + match.getAlliances().getBlue().getScore());
+                System.out.println("selected team: " + selectedTeam);
             }
             curIteration += 1;
         }
