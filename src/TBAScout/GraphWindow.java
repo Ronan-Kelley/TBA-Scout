@@ -106,6 +106,8 @@ public class GraphWindow extends JPanel {
             for (String curTeam : curTeams) {
                 if (curTeam.equals(selectedTeam)) {
                     foundTeam = true;
+                } else {
+                    foundTeam = false;
                 }
             }
 
