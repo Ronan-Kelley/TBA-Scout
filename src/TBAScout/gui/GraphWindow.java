@@ -124,19 +124,19 @@ public class GraphWindow extends JPanel {
                 curTeamData.scores.add(Integer.parseInt(match.getAlliances().getRed().getScore()));
             }
 
-            if (curTeamData.scores.get(curTeamData.scores.size()-1) == 0) {
-                System.out.println("blue teams:");
-                for (String str : match.getAlliances().getBlue().getTeam_keys()) {
-                    System.out.println("    " + str);
-                }
+            // if (curTeamData.scores.get(curTeamData.scores.size()-1) == 0) {
+            //     System.out.println("blue teams:");
+            //     for (String str : match.getAlliances().getBlue().getTeam_keys()) {
+            //         System.out.println("    " + str);
+            //     }
 
-                System.out.println("red teams:");
-                for (String str : match.getAlliances().getRed().getTeam_keys()) {
-                    System.out.println("    " + str);
-                }
-                System.out.println("score (R/B): " + match.getAlliances().getRed().getScore() + " / " + match.getAlliances().getBlue().getScore());
-                System.out.println("selected team: " + selectedTeam);
-            }
+            //     System.out.println("red teams:");
+            //     for (String str : match.getAlliances().getRed().getTeam_keys()) {
+            //         System.out.println("    " + str);
+            //     }
+            //     System.out.println("score (R/B): " + match.getAlliances().getRed().getScore() + " / " + match.getAlliances().getBlue().getScore());
+            //     System.out.println("selected team: " + selectedTeam);
+            // }
             curIteration += 1;
         }
 
