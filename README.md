@@ -16,7 +16,7 @@ specify a path on TheBlueAlliance to request data from, IE /status
 
 -chart
 
-attempt to create an image of a chart of a team's scores. Requires the use of -path with the simple matches path. Default filename is image.png.
+attempt to create an image of a chart of a team's scores. Requires the use of -path with the simple matches path (/team/{team_key}/matches/{year}/simple). Default filename is image.png.
 
 -o
 
