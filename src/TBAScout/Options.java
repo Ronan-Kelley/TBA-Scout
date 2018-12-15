@@ -184,12 +184,31 @@ public class Options {
 
         if (Options.getTBAKey() != null && Options.getPath().contains("matches") && Options.getMakeChart()) {
             String imgName = Options.getFileName();
+
             if (Options.getFileName() == null) {
                 imgName = "image";
             }
 
-            //is this a horribly ugly and potentially confusing way of doing this? Probably.
-            writeChartToDisk(makeChart(new FinalJsonHandler().handleMatchesPojo(new TBAGetRequest(Options.getPath()).getJson()), 141), imgName);
+            int teamNum;
+
+            try {
+                teamNum = Integer.parseInt(Options.getPath().replaceAll("(?mi)\\/|team|frc|matches.*", "")); // get the
+                                                                                                             // team
+                                                                                                             // number
+                                                                                                             // from the
+                                                                                                             // request
+                                                                                                             // path
+            } catch (NumberFormatException e) {
+                System.out.println("Options.handleArgs failed to handle chart creation functionality!");
+                teamNum = 0;
+            }
+
+            // is this a horribly ugly and potentially confusing way of doing this?
+            // Probably.
+            writeChartToDisk(
+                    makeChart(new FinalJsonHandler().handleMatchesPojo(new TBAGetRequest(Options.getPath()).getJson()),
+                            teamNum),
+                    imgName);
         }
     }
 
