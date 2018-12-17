@@ -205,10 +205,15 @@ public class Options {
 
             // is this a horribly ugly and potentially confusing way of doing this?
             // Probably.
+
+            try {
             writeChartToDisk(
                     makeChart(new FinalJsonHandler().handleMatchesPojo(new TBAGetRequest(Options.getPath()).getJson()),
                             teamNum),
                     imgName);
+            } catch (ConnectionException e) {
+                System.out.println(e.getMessage());
+            }
         }
     }
 
