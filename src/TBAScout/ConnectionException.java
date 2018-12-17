@@ -1,5 +1,6 @@
 package TBAScout;
 
+@SuppressWarnings("serial")
 public class ConnectionException extends Exception {
 
     public ConnectionException() {
@@ -20,5 +21,5 @@ public class ConnectionException extends Exception {
         super(message, cause);
         // TODO Auto-generated constructor stub
     }
-    
+
 }
