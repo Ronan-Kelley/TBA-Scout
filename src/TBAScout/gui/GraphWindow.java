@@ -29,11 +29,16 @@ public class GraphWindow extends JPanel {
     FinalJsonHandler jsonHandler = new FinalJsonHandler();
 
     public GraphWindow() {
-        XYDataset dataset = getDataset(jsonHandler.handleMatchesPojo(new TBAGetRequest("/team/frc141/matches/2018/simple").getJson()), 141);
+        try {
+            XYDataset dataset = getDataset(jsonHandler.handleMatchesPojo(new TBAGetRequest("/team/frc141/matches/2018/simple").getJson()), 141);
         JFreeChart chart = createChart(dataset);
         chartPanel = new ChartPanel(chart);
 
         add(chartPanel);
+        } catch (ConnectionException e) {
+            System.out.println(e.getMessage());
+        }
+        
     } 
 
     public void redrawGraph(SimpleMatches[] matches, int teamNum) {
