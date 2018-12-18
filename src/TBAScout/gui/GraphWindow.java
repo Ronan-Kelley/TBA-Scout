@@ -31,10 +31,10 @@ public class GraphWindow extends JPanel {
     public GraphWindow() {
         try {
             XYDataset dataset = getDataset(jsonHandler.handleMatchesPojo(new TBAGetRequest("/team/frc141/matches/2018/simple").getJson()), 141);
-        JFreeChart chart = createChart(dataset);
-        chartPanel = new ChartPanel(chart);
+            JFreeChart chart = createChart(dataset);
+            chartPanel = new ChartPanel(chart);
 
-        add(chartPanel);
+            add(chartPanel);
         } catch (ConnectionException e) {
             System.out.println(e.getMessage());
         }
@@ -48,8 +48,13 @@ public class GraphWindow extends JPanel {
         try {
             chartPanel.setChart(chart);
         } catch(NullPointerException e) {
-
+            fixNoInit(chart);
         }
+    }
+
+    private void fixNoInit(JFreeChart chart) {
+            chartPanel = new ChartPanel(chart);
+            add(chartPanel);
     }
 
     private XYDataset getDataset(SimpleMatches[] matches, int teamNum) {
