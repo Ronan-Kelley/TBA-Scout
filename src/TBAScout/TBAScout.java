@@ -33,6 +33,14 @@ public class TBAScout {
                 exe.setBounds(0, 0, 500, 500);
                 exe.pack();
             });
+
+            if (Options.getTBAKey() == null) {
+                EventQueue.invokeLater(() -> {
+                    KeyInput keyInput = new KeyInput();
+                    keyInput.setVisible(true);
+                    keyInput.pack();
+                });
+            }
         }
     }
 }

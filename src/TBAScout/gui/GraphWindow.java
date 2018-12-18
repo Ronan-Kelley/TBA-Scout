@@ -45,7 +45,11 @@ public class GraphWindow extends JPanel {
         XYDataset dataset = getDataset(matches, teamNum);
         JFreeChart chart = createChart(dataset);
 
-        chartPanel.setChart(chart);
+        try {
+            chartPanel.setChart(chart);
+        } catch(NullPointerException e) {
+
+        }
     }
 
     private XYDataset getDataset(SimpleMatches[] matches, int teamNum) {
