@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
 import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.block.BlockBorder;
 import org.jfree.chart.plot.PlotOrientation;
@@ -205,10 +204,15 @@ public class Options {
 
             // is this a horribly ugly and potentially confusing way of doing this?
             // Probably.
+
+            try {
             writeChartToDisk(
                     makeChart(new FinalJsonHandler().handleMatchesPojo(new TBAGetRequest(Options.getPath()).getJson()),
                             teamNum),
                     imgName);
+            } catch (ConnectionException e) {
+                System.out.println(e.getMessage());
+            }
         }
     }
 

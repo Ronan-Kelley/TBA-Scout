@@ -19,12 +19,8 @@ public class InputWindow extends JPanel {
     // instance variables
     //
 
-    private final String[] TBAPaths = {
-        "/status",
-        "/team/{team_key}/simple",
-        "/team/{team_key}/events",
-        "/team/{team_key}/matches/{year}/simple"
-    };
+    private final String[] TBAPaths = { "/status", "/team/{team_key}/simple", "/team/{team_key}/events",
+            "/team/{team_key}/matches/{year}/simple" };
 
     private String requestOutput = "";
     private Boolean newRequest = false;
@@ -70,14 +66,16 @@ public class InputWindow extends JPanel {
                 String path = (String) paths.getSelectedItem();
                 switch (path) {
                     case "/status":
-                        StatusPojo statusOut = jsonHandler.handleStatusJson(new TBAGetRequest().getJson());
                         try {
+                        StatusPojo statusOut = jsonHandler.handleStatusJson(new TBAGetRequest().getJson());
                         requestOutput = "current season: " + statusOut.getCurrent_season();
+                        newRequest = true;
                         } catch (NullPointerException err) {
-                            requestOutput = "an error has occured!";
+
+                        } catch (ConnectionException err) {
+                            System.out.println(err.getMessage());
                         }
 
-                        newRequest = true;
 
                         break;
                     
@@ -92,11 +90,14 @@ public class InputWindow extends JPanel {
                             teamNum = 141;
                         }
 
-                        SimpleTeamPojo simpleTeamPojo = jsonHandler.handleTeamJson(new TBAGetRequest("/team/frc" + teamNum + "/simple").getJson());
+                        try {
+                            SimpleTeamPojo simpleTeamPojo = jsonHandler.handleTeamJson(new TBAGetRequest("/team/frc" + teamNum + "/simple").getJson());
+                            requestOutput = "team's home city: " + simpleTeamPojo.getCity();
 
-                        requestOutput = "team's home city: " + simpleTeamPojo.getCity();
-
-                        newRequest = true;
+                            newRequest = true;
+                        } catch(ConnectionException err) {
+                            System.out.println(err.getMessage());
+                        }
 
                         break;
 
@@ -111,11 +112,15 @@ public class InputWindow extends JPanel {
                             teamNum = 141;
                         }
 
-                        EventsPojo[] eventsPojo = jsonHandler.handleEventsPojo(new TBAGetRequest("/team/frc" + teamNum + "/events").getJson());
+                        try {
+                            EventsPojo[] eventsPojo = jsonHandler.handleEventsPojo(new TBAGetRequest("/team/frc" + teamNum + "/events").getJson());
 
-                        requestOutput = eventsPojo[eventsPojo.length-1].getYear();
+                            requestOutput = eventsPojo[eventsPojo.length-1].getYear();
 
-                        newRequest = true;
+                            newRequest = true;
+                        } catch (ConnectionException err) {
+                            System.out.println(err.getMessage());
+                        }
 
                         break;
 
@@ -130,9 +135,13 @@ public class InputWindow extends JPanel {
                             teamNum = 141;
                         }
 
-                        jsonObj = jsonHandler.handleMatchesPojo(new TBAGetRequest("/team/frc" + teamNum + "/matches/2018/simple").getJson());
+                        try {
+                            jsonObj = jsonHandler.handleMatchesPojo(new TBAGetRequest("/team/frc" + teamNum + "/matches/2018/simple").getJson());
 
-                        newGraphRequest = true;
+                            newGraphRequest = true;
+                        } catch (ConnectionException err) {
+                            System.out.println(err.getMessage());
+                        }
 
                         break;
                     default:
@@ -172,7 +181,7 @@ public class InputWindow extends JPanel {
         int teamNum = 0;
         try {
             teamNum = Integer.parseInt(teamKey.getText());
-        } catch (NumberFormatException e ) {
+        } catch (NumberFormatException e) {
 
         }
         return teamNum;
