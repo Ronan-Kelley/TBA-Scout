@@ -4,7 +4,7 @@ yet another scouting application for FIRST that pulls from TBA.
 # CLI-Options
 -key [TBA_Auth_Key] 
 
-*required* for program to even launch, specifices the auth key to be used to access the blue alliance API. If you don't have one, create an account, go to your settings page, scroll down, and make one.
+specifies the auth key to be used to access the blue alliance API. If you don't have one, create an account, go to your settings page, and generate one. This is no longer required for the GUI to launch, but ALL functionality for both the GUI and the command line implementation require a valid key to be input.
     
 -cli
 
