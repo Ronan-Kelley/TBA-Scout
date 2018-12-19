@@ -31,12 +31,16 @@ public class GraphWindow extends JPanel {
     public GraphWindow() {
         try {
             XYDataset dataset = getDataset(jsonHandler.handleMatchesPojo(new TBAGetRequest("/team/frc141/matches/2018/simple").getJson()), 141);
-        JFreeChart chart = createChart(dataset);
-        chartPanel = new ChartPanel(chart);
+            JFreeChart chart = createChart(dataset);
+            chartPanel = new ChartPanel(chart);
 
-        add(chartPanel);
+            add(chartPanel);
         } catch (ConnectionException e) {
-            System.out.println(e.getMessage());
+            XYDataset dataset = createNullSet();
+            JFreeChart chart = createChart(dataset);
+            chartPanel = new ChartPanel(chart);
+            
+            add(chartPanel);
         }
         
     } 
@@ -45,7 +49,11 @@ public class GraphWindow extends JPanel {
         XYDataset dataset = getDataset(matches, teamNum);
         JFreeChart chart = createChart(dataset);
 
-        chartPanel.setChart(chart);
+        try {
+            chartPanel.setChart(chart);
+        } catch(NullPointerException e) {
+            fixNoInit(chart);
+        }
     }
 
     private XYDataset getDataset(SimpleMatches[] matches, int teamNum) {
@@ -148,6 +156,29 @@ public class GraphWindow extends JPanel {
         curTeamData.calcScoreInfo();
 
         return dataPoints;
+    }
+
+    //
+    // methods to fix issues caused by launching without a key set in launch options
+    //
+
+    private void fixNoInit(JFreeChart chart) {
+        chartPanel = new ChartPanel(chart);
+        add(chartPanel);
+        updateUI();
+    }
+
+    private XYDataset createNullSet() {
+        XYSeries series = new XYSeries("null");
+
+        for (int i = 0; i < 10; i++) {
+            series.add(i, i);
+        }
+
+        XYSeriesCollection dataset = new XYSeriesCollection();
+        dataset.addSeries(series);
+
+        return dataset;
     }
 
 }
