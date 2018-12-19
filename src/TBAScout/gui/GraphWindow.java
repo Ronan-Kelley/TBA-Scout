@@ -36,7 +36,11 @@ public class GraphWindow extends JPanel {
 
             add(chartPanel);
         } catch (ConnectionException e) {
-            System.out.println(e.getMessage());
+            XYDataset dataset = createNullSet();
+            JFreeChart chart = createChart(dataset);
+            chartPanel = new ChartPanel(chart);
+            
+            add(chartPanel);
         }
         
     } 
@@ -50,11 +54,6 @@ public class GraphWindow extends JPanel {
         } catch(NullPointerException e) {
             fixNoInit(chart);
         }
-    }
-
-    private void fixNoInit(JFreeChart chart) {
-            chartPanel = new ChartPanel(chart);
-            add(chartPanel);
     }
 
     private XYDataset getDataset(SimpleMatches[] matches, int teamNum) {
@@ -157,6 +156,29 @@ public class GraphWindow extends JPanel {
         curTeamData.calcScoreInfo();
 
         return dataPoints;
+    }
+
+    //
+    // methods to fix issues caused by launching without a key set in launch options
+    //
+
+    private void fixNoInit(JFreeChart chart) {
+        chartPanel = new ChartPanel(chart);
+        add(chartPanel);
+        updateUI();
+    }
+
+    private XYDataset createNullSet() {
+        XYSeries series = new XYSeries("null");
+
+        for (int i = 0; i < 10; i++) {
+            series.add(i, i);
+        }
+
+        XYSeriesCollection dataset = new XYSeriesCollection();
+        dataset.addSeries(series);
+
+        return dataset;
     }
 
 }
