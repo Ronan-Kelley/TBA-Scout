@@ -1,6 +1,5 @@
 package TBAScout.gui;
 
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -13,6 +12,7 @@ import javax.swing.Timer;
 
 import TBAScout.Options;
 
+@SuppressWarnings("serial")
 public class KeyInput extends JFrame implements ActionListener {
     JLabel lblHeader = new JLabel("No TBA Key detected! Please paste your TBA Key.");
     JTextArea txtTBAKey = new JTextArea(1, 10);
