@@ -1,5 +1,5 @@
 # TBA-Scout
-yet another scouting application for FIRST that pulls from TBA.
+yet another scouting application for FIRST that pulls from TBA, but this time with desktop and command line use in mind. 
 
 # CLI-Options
 -key [TBA_Auth_Key] 
