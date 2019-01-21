@@ -247,7 +247,7 @@ public class Options {
             }
         }
 
-        if (Options.getFIRSTKey() == null && Options.getTBAKey() == null) {
+        if (Options.getFIRSTKey() != null && Options.getTBAKey() != null) {
             System.out.println("found both a TBA key and a FIRST key - usage of both at once is NOT supported!");
         }
 

@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -14,9 +15,10 @@ import TBAScout.Options;
 
 @SuppressWarnings("serial")
 public class KeyInput extends JFrame implements ActionListener {
-    JLabel lblHeader = new JLabel("No TBA Key detected! Please paste your TBA Key.");
-    JTextArea txtTBAKey = new JTextArea(1, 10);
+    JLabel lblHeader = new JLabel("No FIRST or TBA API Key detected! Please paste your FIRST or TBA Key here.");
+    JTextArea txtKey = new JTextArea(1, 10);
     JButton btnSubmit = new JButton("Submit");
+    JComboBox<String> apiSelector = new JComboBox<String>(new String[] {"FIRST", "TBA"});
     Timer packLoop = new Timer(50, this);
 
     public KeyInput() {
@@ -32,7 +34,11 @@ public class KeyInput extends JFrame implements ActionListener {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                Options.setTBAKey(txtTBAKey.getText());
+                if (apiSelector.getSelectedItem().equals("FIRST")) {
+                    Options.setFIRSTKey(txtKey.getText());
+                } else if (apiSelector.getSelectedItem().equals("TBA")) {
+                    Options.setTBAKey(txtKey.getText());
+                }
                 dispose();
 			}
 
@@ -41,7 +47,8 @@ public class KeyInput extends JFrame implements ActionListener {
         JPanel holder = new JPanel();
 
         holder.add(lblHeader);
-        holder.add(txtTBAKey);
+        holder.add(txtKey);
+        holder.add(apiSelector);
         holder.add(btnSubmit);
 
         add(holder);
