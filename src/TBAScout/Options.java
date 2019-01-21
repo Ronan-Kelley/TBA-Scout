@@ -32,6 +32,7 @@ public class Options {
      */
     private static Boolean cli = false;
     private static String TBAKey = null; // put your key here, or pass it to the program as an argument
+    private static String FIRSTKey = null;
     private static String path = "none";
     private static Boolean makeChart = false;
     private static String fileName = null;
@@ -45,7 +46,7 @@ public class Options {
     }
 
     public static Boolean getCli() {
-        return cli;
+        return Options.cli;
     }
 
     public static void setTBAKey(String TBAKey) {
@@ -53,7 +54,15 @@ public class Options {
     }
 
     public static String getTBAKey() {
-        return TBAKey;
+        return Options.TBAKey;
+    }
+
+    public static void setFIRSTKey(String FIRSTKey) {
+        Options.FIRSTKey = FIRSTKey;
+    }
+
+    public static String getFIRSTKey() {
+        return Options.FIRSTKey;
     }
 
     public static void setPath(String path) {
@@ -61,7 +70,7 @@ public class Options {
     }
 
     public static String getPath() {
-        return path;
+        return Options.path;
     }
 
     private static void setMakeChart(Boolean makeChart) {
@@ -88,13 +97,13 @@ public class Options {
                     Options.setCli(true);
                     // System.out.println("found argument: " + arg);
                     break;
-                case "-key": // make sure "-key" is specified before looping through all this
+                case "-TBAKey": // make sure "-key" is specified before looping through all this
                     Boolean foundDashKey = false;
                     Boolean foundKey = false;
                     String keyArg = "";
                     for (int i = 0; i < args.length; i++) { // loop back through the array of arguments
                         if (!foundDashKey) {
-                            if (args[i].equals("-key")) { // find the argument dictating a key
+                            if (args[i].equals("-TBAKey")) { // find the argument dictating a key
                                 foundDashKey = true;
                             }
                         } else if (foundDashKey && !foundKey) {
@@ -110,6 +119,29 @@ public class Options {
                     Options.setTBAKey(keyArg);
                     // System.out.println("found argument pair: " + arg + ": " + keyArg);
                     break;
+
+                case "-FIRSTKey":
+                    Boolean foundDashFKey = false;
+                    Boolean foundFKey = false;
+                    String FKeyArg = "";
+                    for (int i = 0; i < args.length; i++) {
+                        if (!foundDashFKey) {
+                            if (args[i].equals("-FIRSTKey")) {
+                                foundDashFKey = true;
+                            }
+                        } else if (foundDashFKey && !foundFKey) {
+                            if (args[i].contains("-") == false) {
+                                foundFKey = false;
+
+                                FKeyArg += args[i];
+                            } else if (args[i].contains("-")) {
+                                foundFKey = true;
+                            }
+                        }
+                    }
+                    Options.setFIRSTKey(FKeyArg);
+
+                break;
 
                 case "-path":
                     /**
@@ -214,6 +246,11 @@ public class Options {
                 System.out.println(e.getMessage());
             }
         }
+
+        if (Options.getFIRSTKey() == null && Options.getTBAKey() == null) {
+            System.out.println("found both a TBA key and a FIRST key - usage of both at once is NOT supported!");
+        }
+
     }
 
     //
