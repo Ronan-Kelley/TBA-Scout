@@ -34,7 +34,7 @@ public class TBAScout {
                 exe.pack();
             });
 
-            if (Options.getTBAKey() == null) {
+            if (Options.getTBAKey() == null && Options.getFIRSTKey() == null) {
                 EventQueue.invokeLater(() -> {
                     KeyInput keyInput = new KeyInput();
                     keyInput.setVisible(true);
