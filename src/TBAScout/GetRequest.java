@@ -14,6 +14,7 @@ public class GetRequest {
     private final String USER_AGENT = "Mozilla/5.0";
     private String baseURL, path;
     private String[] headers;
+    private int responseCode;
     private String finalResponse = null;
     
     public GetRequest(String baseURL, String path, String[] headers) {
@@ -24,6 +25,7 @@ public class GetRequest {
             sendGet();
         } catch (Exception e) {
             System.out.println("couldn't send get request!");
+            System.out.println(e.getMessage());
         }
     }
 
@@ -42,9 +44,9 @@ public class GetRequest {
             connection.setRequestProperty(headers[i], headers[i+1]);
         }
 
-		// int responseCode = connection.getResponseCode();
-		// System.out.println("\nSending 'GET' request to URL : " + baseURL);
-        // System.out.println("Response Code : " + responseCode);
+		responseCode = connection.getResponseCode();
+		System.out.println("\nSending 'GET' request to URL : " + baseURL);
+        System.out.println("Response Code : " + responseCode);
 
 		BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 		String inputLine;
@@ -57,8 +59,6 @@ public class GetRequest {
 
         setFinalResponse(response.toString());
         
-        // System.out.println(response.toString());
-
     }
     
     private void setFinalResponse(String finalResponse) {
@@ -71,5 +71,9 @@ public class GetRequest {
         } else {
             return "json unavailable";
         }
+    }
+
+    public int getResponseCode() {
+        return responseCode;
     }
 }

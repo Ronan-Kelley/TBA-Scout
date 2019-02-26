@@ -121,25 +121,14 @@ public class Options {
                     break;
 
                 case "-FIRSTKey":
-                    Boolean foundDashFKey = false;
-                    Boolean foundFKey = false;
                     String FKeyArg = "";
                     for (int i = 0; i < args.length; i++) {
-                        if (!foundDashFKey) {
-                            if (args[i].equals("-FIRSTKey")) {
-                                foundDashFKey = true;
-                            }
-                        } else if (foundDashFKey && !foundFKey) {
-                            if (args[i].contains("-") == false) {
-                                foundFKey = false;
-
-                                FKeyArg += args[i];
-                            } else if (args[i].contains("-")) {
-                                foundFKey = true;
-                            }
+                        if (args[i].equals("-FIRSTKey")) {
+                            FKeyArg = args[i+1];
                         }
                     }
                     Options.setFIRSTKey(FKeyArg);
+                    System.out.println("FkeyArg: " + FKeyArg);
 
                 break;
 
@@ -247,10 +236,7 @@ public class Options {
             }
         }
 
-        if (Options.getFIRSTKey() != null && Options.getTBAKey() != null) {
-            System.out.println("found both a TBA key and a FIRST key - usage of both at once is NOT supported!");
-        }
-
+        FIRSTGetRequest test = new FIRSTGetRequest("2017/events");
     }
 
     //
