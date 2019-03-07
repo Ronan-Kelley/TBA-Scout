@@ -11,7 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.Timer;
 
-import TBAScout.Options;
+import TBAScout.restrequests.*;
 
 @SuppressWarnings("serial")
 public class KeyInput extends JFrame implements ActionListener {

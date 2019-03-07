@@ -1,4 +1,4 @@
-package TBAScout;
+package TBAScout.restrequests;
 
 import com.google.gson.Gson;
 

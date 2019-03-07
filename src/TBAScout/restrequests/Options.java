@@ -1,4 +1,4 @@
-package TBAScout;
+package TBAScout.restrequests;
 
 import java.awt.BasicStroke;
 import java.awt.Color;

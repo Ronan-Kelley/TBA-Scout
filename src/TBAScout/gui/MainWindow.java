@@ -1,6 +1,6 @@
 package TBAScout.gui;
 
-import TBAScout.*;
+import TBAScout.restrequests.*;
 
 import java.awt.EventQueue;
 import java.awt.GridLayout;

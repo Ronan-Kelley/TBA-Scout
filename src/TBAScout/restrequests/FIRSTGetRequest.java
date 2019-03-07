@@ -1,4 +1,4 @@
-package TBAScout;
+package TBAScout.restrequests;
 
 import java.util.Base64;
 
@@ -8,7 +8,6 @@ public class FIRSTGetRequest {
      */
 
     private final String baseURL = "https://frc-api.firstinspires.org/v2.0"; //baseURL will always be FIRST/v2.0
-    private String[] requestModifiers;
     private String[] headers;
     private String path = "";
     private String key = "";
@@ -31,8 +30,6 @@ public class FIRSTGetRequest {
 
     private void doRequest() {
         gr = new GetRequest(baseURL, path, headers);
-        // System.out.println("json:\n" + getJson());
-        // System.out.println("response code: " + gr.getResponseCode());
     }
 
     public String getJson() {

@@ -1,4 +1,4 @@
-package TBAScout;
+package TBAScout.restrequests;
 
 @SuppressWarnings("serial")
 public class ConnectionException extends Exception {

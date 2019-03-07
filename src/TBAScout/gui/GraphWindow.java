@@ -1,6 +1,6 @@
 package TBAScout.gui;
 
-import TBAScout.*;
+import TBAScout.restrequests.*;
 
 import java.awt.BasicStroke;
 import java.awt.Color;

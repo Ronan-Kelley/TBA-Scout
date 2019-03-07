@@ -1,4 +1,4 @@
-package TBAScout;
+package TBAScout.restrequests;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
